@@ -166,7 +166,7 @@ class HeadLayer(nn.Module):
         return out
     
 #Complete network...
-class Network(nn.Module):
+class DecoderOnlyTransformer(nn.Module):
     def __init__(self,embedd_dim,vocab_size,nheads,layers,dropout,batch_first = True):
         super(Network,self).__init__()
 
@@ -191,9 +191,14 @@ class Network(nn.Module):
         return out
     
 
-#Network object...
-Network_ = Network(embedd_dim = 512,vocab_size = 1000,nheads = 8,layers = 20,dropout = 0.1,batch_first = True) 
+if __name__ == "__main__":
+    model = DecoderOnlyTransformer(
+        embed_dim=512,
+        vocab_size=1000,
+        num_heads=8,
+        num_layers=20,
+        dropout=0.1
+    )
 
-#Total parameters...
-total_params = sum(p.numel() for p in Network_.parameters()) / 1e6
-print(f'Total parameters in the model: {total_params:.2f}M')
+    total_params = sum(p.numel() for p in model.parameters()) / 1e6
+    print(f"Total parameters: {total_params:.2f}M")
